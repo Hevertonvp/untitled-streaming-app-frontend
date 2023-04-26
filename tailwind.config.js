@@ -1,12 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
+
+
+
 module.exports = {
   content: ['./src/**/*.{html,js}', '.public/**/*.{html}'],
   theme: {
     colors: {
       lightOrange: '#872e01',
       white: '#ffffff',
-      blue: '#11345c',
+      blue: '#041e47',
       black: '#000000',
       darkblue: '#14059c',
       softpurple: '#b566fa',
@@ -22,6 +25,7 @@ module.exports = {
       'gray-dark': '#273444',
       gray: '#8492a6',
       graylight: '#e1e9f2',
+      'dark-theme-bg': '#27282b'
     },
     extend: {
       fontFamily: {
@@ -39,9 +43,10 @@ module.exports = {
         '4xl': '2rem',
       },
       height: {
-        'desktop': '32rem',
-        'mobile': '100vh',
+        'desktop': '26rem',
+        'mobile': '52rem',
       },
     },
   },
 };
+

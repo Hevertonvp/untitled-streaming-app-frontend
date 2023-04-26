@@ -22,6 +22,23 @@ body {
   margin: auto;
 background: #380e69;
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+/* .hidden {
+  opacity: 0;
+  height: 0;
+  transition-property: opacity, height;
+  transition-duration: 500ms;
+} */
+
 
 @tailwind components;
 @tailwind utilities;
+@tailwind variants
