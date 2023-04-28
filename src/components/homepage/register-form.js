@@ -1,13 +1,13 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable react/prop-types */
 import React, { useRef, useState, useEffect } from 'react';
+import axios from '../../api/axios';
 import { IoClose } from 'react-icons/io5';
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const PASS_REGEX =
-  /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[a-z]).{8,}$/;
 
-const SIGN_IN_URL = '/register';
+const REGISTER_BY_EMAIL_URL = '/api/v1/users/signUp/';
+const REGISTER_BY_TOKEN_URL = '/api/v1/users/guestLogin/';
 
 function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
   const errRef = useRef();
@@ -17,16 +17,9 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
-  const [pass, setPass] = useState('');
-  const [passFocus, setPassFocus] = useState(false);
-  const [validPass, setValidPass] = useState(false);
-
-  const [matchPass, setMatchPass] = useState('');
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
-
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const [passToken, setPassToken] = useState('');
 
   useEffect(() => {
     emailRef.current.focus();
@@ -40,147 +33,145 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
   }, [email]);
 
   useEffect(() => {
-    const result = PASS_REGEX.test(pass);
-    console.log(result);
-    console.log(pass);
-    const match = pass === matchPass;
-    setValidPass(result);
-    setValidMatch(match);
-  }, [pass, matchPass]);
-
-  useEffect(() => {
     setErrMsg('');
-  }, [email, pass, matchPass]);
+  }, [email]);
+
+  const handleEmailSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        REGISTER_BY_EMAIL_URL,
+        JSON.stringify({ email }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
+        setSuccess(true),
+      );
+      console.log(response.data);
+    } catch (error) {
+      if (!error?.response) {
+        setErrMsg(error);
+      }
+    }
+  };
+
+  const handleTokenSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await axios.post(
+        REGISTER_BY_TOKEN_URL,
+        JSON.stringify({ passToken }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
+      );
+    } catch (error) {
+      if (!error.response?.data.message) {
+        setErrMsg('ocorreu um erro para realizar o login');
+      }
+      setErrMsg(error.response?.data.message);
+      console.log(errMsg);
+    }
+  };
 
   return (
     <section
       className={`${
         registerFormIsOpen
           ? 'opacity-100  h-auto'
-          : 'opacity-0  h-0 pointer-events-none'
+          : 'opacity-0 h-0 pointer-events-none'
       } w-full pt-20 flex justify-center transition-opacity duration-200 ease-in-out`}
     >
-      <form className=" fixed mt-10 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
-        <div className="text-white flex justify-end">
-          <IoClose onClick={() => setRegisterFormIsOpen(!registerFormIsOpen)} />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="email" className="block mb-2 text-graylight ">
-            Email
-          </label>
-          <p
-            ref={errRef}
-            className={`${
-              emailFocus && email && !validEmail
-                ? 'text-darkorange'
-                : 'invisible'
-            }`}
+      <section className=" fixed mt-10  font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
+        {success ? (
+          <form
+            onSubmit={handleTokenSubmit}
+            className="flex flex-col space-y-5"
           >
-            Por favor, insira um email valido
-          </p>
-          <input
-            ref={emailRef}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            autoComplete="off"
-            type="email"
-            id="email"
-            className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block p-2.5"
-            placeholder="name@provedor.com"
-            onFocus={() => setEmailFocus(true)}
-            onBlur={() => setEmailFocus(false)}
-            required
-          />
-        </div>
-        <div className="">
-          <label htmlFor="password" className="block  text-graylight ">
-            Senha
-          </label>
-          <p
-            className={`${
-              passFocus && !validPass ? 'text-darkorange' : 'invisible'
-            }`}
-          >
-            Mínimo 8 caracteres, ao menos uma letra maiúscula e um caractere
-            especial
-          </p>
-          <input
-            type="password"
-            id="password"
-            autoComplete="off"
-            onChange={(e) => setPass(e.target.value)}
-            value={pass}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block w-full p-2.5 "
-            required
-            onFocus={() => setPassFocus(true)}
-            onBlur={() => setPassFocus(false)}
-          />
-        </div>
-        <div className="">
-          <label
-            htmlFor="repeat-password"
-            className="block mb-2 text-graylight "
-          >
-            Confirme sua senha
-          </label>
-          <p
-            className={`${
-              !validMatch && matchFocus ? 'text-darkorange' : 'invisible'
-            }`}
-          >
-            As senhas não são iguais
-          </p>
-          <input
-            type="password"
-            id="repeat-password"
-            onChange={(e) => setMatchPass(e.target.value)}
-            value={matchPass}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block w-full p-2.5"
-            required
-            autoComplete="off"
-            onFocus={() => setMatchFocus(true)}
-            onBlur={() => setMatchFocus(false)}
-          />
-        </div>
-
-        <div className="flex justify-center pt-2 mb-6">
-          <div className="flex items-center h-5">
+            <IoClose
+              className="self-end"
+              onClick={() => setRegisterFormIsOpen(!registerFormIsOpen)}
+            />
+            <div className="text-center space-y-2 text-white">
+              <h1 className="text-orange">Email enviado com sucesso!</h1>
+              <p>
+                Por favor, insira o token que foi enviado para email EMAILAQUI e
+                clique em enviar para fazer login
+              </p>
+            </div>
             <input
-              id="terms"
-              type="checkbox"
-              value=""
-              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:bg-dark-blue"
+              onChange={(e) => {
+                setPassToken(e.target.value);
+              }}
+              type="password"
+              id="password"
+              autoComplete="off"
+              className="shadow-sm w-2/4 self-center bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block p-2.5 "
               required
             />
-          </div>
-          <div className="flex flex-col  justify-center">
-            <label
-              htmlFor="terms"
-              className="ml-2 text-sm font-medium  text-graylight "
+            <p className="">{errMsg ? errMsg : ''}</p>
+            <button
+              type="submit"
+              className="text-black self-center bg-graylight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              Eu concordo com os{' '}
-              <a href="#" className="text-white  hover:underline ">
-                termos e condições
-              </a>
-            </label>
-            <p htmlFor="sign in" className="text-orange pt-3">
-              Não possui cadastro?{' '}
-              <span>
-                <a href="/" className="hover:underline">
-                  Clique aqui
-                </a>
-              </span>
-            </p>
-          </div>
-        </div>
-        <button
-          type="submit"
-          className="text-black  bg-graylight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-        >
-          Entrar
-        </button>
-      </form>
+              Enviar
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleEmailSubmit} className="">
+            <div className="text-white flex justify-end">
+              <IoClose
+                onClick={() => setRegisterFormIsOpen(!registerFormIsOpen)}
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="email"
+                className="block mb-2 text-graylight text-2xl "
+              >
+                Digite seu Email
+              </label>
+              <p>
+                <p className="text-darkorange">Importante!</p> Seus códigos
+                adquiridos serão enviados para o email informado
+              </p>
+              <p
+                ref={errRef}
+                className={`${
+                  emailFocus && email && !validEmail
+                    ? 'text-darkorange'
+                    : 'invisible'
+                }`}
+              >
+                Por favor, insira um email valido
+              </p>
+              <input
+                ref={emailRef}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                autoComplete="off"
+                type="email"
+                id="email"
+                className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block p-2.5"
+                placeholder="name@provedor.com"
+                onFocus={() => setEmailFocus(true)}
+                onBlur={() => setEmailFocus(false)}
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className={`text-black bg-graylight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
+            >
+              Enviar
+            </button>
+          </form>
+        )}
+      </section>
     </section>
   );
 }

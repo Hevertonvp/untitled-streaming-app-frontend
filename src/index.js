@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Home from './pages/HomePage';
 import Dashboard from './pages/Dashboard';
+import ProductsPage from './pages/ProductsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './index.css';
@@ -13,6 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/products" element={<ProductsPage />}></Route>
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,

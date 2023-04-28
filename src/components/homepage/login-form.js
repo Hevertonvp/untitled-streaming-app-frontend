@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable react/prop-types */
 import React, { useRef, useState, useEffect } from 'react';
+import axios from '../../api/axios';
 import { IoClose } from 'react-icons/io5';
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -56,11 +57,11 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
     <section
       className={`${
         loginFormIsOpen
-          ? 'opacity-100 h-auto  pt-20'
+          ? 'opacity-100 h-auto max-sm:pt-20 '
           : 'opacity-0 h-0 pointer-events-none'
-      } w-full  flex justify-center transition-opacity duration-200 ease-in-out`}
+      } w-full flex justify-center  transition-opacity duration-200 ease-in-out`}
     >
-      <form className=" fixed mt-10 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
+      <form className=" fixed md:mt-40 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
         <div className="text-white flex justify-end">
           <IoClose onClick={() => setLoginFormIsOpen(!loginFormIsOpen)} />
         </div>

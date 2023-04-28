@@ -9,9 +9,9 @@ module.exports = {
     colors: {
       lightOrange: '#872e01',
       white: '#ffffff',
-      blue: '#041e47',
+      blue: '#003180',
       black: '#000000',
-      darkblue: '#14059c',
+      darkblue: '#041e47',
       softpurple: '#b566fa',
       mediumpurple: '#602791',
       maincolor: '#291064',
@@ -25,7 +25,8 @@ module.exports = {
       'gray-dark': '#273444',
       gray: '#8492a6',
       graylight: '#e1e9f2',
-      'dark-theme-bg': '#27282b'
+      'dark-theme-bg': '#27282b',
+      'card-bg': '#3c1185'
     },
     extend: {
       fontFamily: {

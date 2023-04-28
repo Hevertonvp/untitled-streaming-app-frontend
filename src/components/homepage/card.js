@@ -5,7 +5,7 @@ function Card({ img, title, isInverted, description }) {
   return (
     <>
       <div
-        className={`flex w-full max-sm:pt-10 md:p-20 max-sm:text-center max-sm:flex-col max-sm:h-mobile items-center h-desktop justify-around border border-y-gray-dark bg-gradient-to-t ${
+        className={`flex overflow-hidden w-full max-sm:pt-10 md:p-20 max-sm:text-center max-sm:flex-col max-sm:h-mobile items-center h-desktop justify-around border border-y-gray-dark bg-gradient-to-t ${
           isInverted
             ? 'from-orange to-darkpurple'
             : ' from-darkpurple to-orange'

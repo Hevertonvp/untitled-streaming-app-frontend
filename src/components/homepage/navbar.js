@@ -99,7 +99,7 @@ function Navbar({
               }}
               key={id}
               to={link}
-              className={` my-2 flex ml-2 justify-center hover:border-b-2 border-mediumpurple px-4 max-sm:rounded-md md:rounded-sm max-sm:bg-pink max-sm:bg-opacity-5 overflow-hidden text-center  ${
+              className={` my-2 flex ml-2 justify-center hover:border-b md:hover:underline underline-offset-4 border-mediumpurple px-4 max-sm:rounded-md md:rounded-sm max-sm:bg-pink max-sm:bg-opacity-5 overflow-hidden text-center  ${
                 open ? 'opacity-100' : 'max-sm:opacity-0'
               } font-squada text-lg ${
                 name === 'ENTRAR'
