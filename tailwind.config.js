@@ -2,7 +2,6 @@
 /* eslint-disable no-undef */
 
 
-
 module.exports = {
   content: ['./src/**/*.{html,js}', '.public/**/*.{html}'],
   theme: {

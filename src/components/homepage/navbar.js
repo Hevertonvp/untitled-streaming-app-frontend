@@ -9,8 +9,9 @@ function Navbar({
   loginFormIsOpen,
   registerFormIsOpen,
   setRegisterFormIsOpen,
+  openMenu,
+  setOpenMenu,
 }) {
-  const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = [
@@ -21,7 +22,7 @@ function Navbar({
     },
     {
       name: 'Venda rápida',
-      link: '/venda-rapida',
+      link: '/products',
     },
     {
       name: 'Contato',
@@ -49,8 +50,8 @@ function Navbar({
       onScroll={() => isScrolled === 0}
       className={`
       ${
-        isScrolled || open
-          ? 'bg-darkpurple md:bg-opacity-90  max-sm:bg-opacity-100'
+        isScrolled || openMenu
+          ? 'bg-darkpurple md:bg-opacity-95  max-sm:bg-opacity-100'
           : ''
       }
        w-full
@@ -60,14 +61,16 @@ function Navbar({
       duration-300
       max-sm:border-b-2
       transition-all
-      items-center ${open ? 'h-80' : 'h-20'} duration-200 md:h-20`}
+      items-center ${openMenu ? 'h-80 z-50' : 'h-20'} duration-200 md:h-20`}
     >
       <div
         className={`max-w-screen-xl flex flex-col md:flex-row max-md:flex-wrap justify-between mx-auto p-5`}
       >
         <div className="flex mb-10 items-center justify-between">
           <div className="flex ">
-            <img src=".././images/logo.png" alt="" className="h-10" />
+            <Link to={'/'}>
+              <img src=".././images/logo.png" alt="" className="h-10" />
+            </Link>
             <h1 className="font-pacifico drop-shadow-md  text-lg mt-2 ml-0 text-softpurple">
               Painel
             </h1>
@@ -75,9 +78,13 @@ function Navbar({
           <button className="ml-40">
             <HiOutlineViewList
               onClick={() => {
-                setOpen(!open);
+                setOpenMenu(!openMenu);
               }}
-              className="md:hidden text-white text-3xl mt-4"
+              className={` ${
+                loginFormIsOpen
+                  ? 'hidden'
+                  : 'md:hidden text-white text-3xl mt-4'
+              }`}
             />
           </button>
         </div>
@@ -85,13 +92,16 @@ function Navbar({
           return (
             <Link
               onClick={(e) => {
-                e.preventDefault();
                 switch (name) {
-                  case 'Venda rápida':
-                    setRegisterFormIsOpen(!registerFormIsOpen);
-                    break;
                   case 'ENTRAR':
+                    e.preventDefault();
                     setLoginFormIsOpen(!loginFormIsOpen);
+                    setOpenMenu(false);
+                    break;
+                  case 'Seja um revendedor':
+                    e.preventDefault();
+                    setRegisterFormIsOpen(!registerFormIsOpen);
+                    setOpenMenu(false);
                     break;
                   default:
                     break;
@@ -99,12 +109,12 @@ function Navbar({
               }}
               key={id}
               to={link}
-              className={` my-2 flex ml-2 justify-center hover:border-b md:hover:underline underline-offset-4 border-mediumpurple px-4 max-sm:rounded-md md:rounded-sm max-sm:bg-pink max-sm:bg-opacity-5 overflow-hidden text-center  ${
-                open ? 'opacity-100' : 'max-sm:opacity-0'
+              className={` my-2 flex ml-2 justify-center hover:border-b md:hover:underline underline-offset-4 border-mediumpurple px-4 max-sm:rounded-md md:rounded-sm max-sm:bg-pink max-sm:bg-opacity-5 overflow-hidden items-center  ${
+                openMenu ? 'opacity-100' : 'max-sm:opacity-0'
               } font-squada text-lg ${
-                name === 'ENTRAR'
-                  ? 'text-yellow max-sm:mt-10 hover:text-darkorange'
-                  : 'text-graylight hover:text-white '
+                name === 'ENTRAR' || name === 'Venda rápida'
+                  ? 'text-orange max-sm:mt-10 hover:text-darkorange'
+                  : 'text-graylight hover:text-white'
               } duration-100`}
             >
               {icon ? React.createElement(icon) : ''}

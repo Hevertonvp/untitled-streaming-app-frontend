@@ -27,8 +27,7 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
-    console.log(result);
-    console.log(email);
+
     setValidEmail(result);
   }, [email]);
 
@@ -48,7 +47,6 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
         },
         setSuccess(true),
       );
-      console.log(response.data);
     } catch (error) {
       if (!error?.response) {
         setErrMsg(error);
@@ -72,7 +70,6 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
         setErrMsg('ocorreu um erro para realizar o login');
       }
       setErrMsg(error.response?.data.message);
-      console.log(errMsg);
     }
   };
 
@@ -82,7 +79,7 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
         registerFormIsOpen
           ? 'opacity-100  h-auto'
           : 'opacity-0 h-0 pointer-events-none'
-      } w-full pt-20 flex justify-center transition-opacity duration-200 ease-in-out`}
+      } w-full pt-20 flex justify-center transition-opacity duration-75 ease-in-out`}
     >
       <section className=" fixed mt-10  font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
         {success ? (
@@ -133,10 +130,8 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
               >
                 Digite seu Email
               </label>
-              <p>
-                <p className="text-darkorange">Importante!</p> Seus códigos
-                adquiridos serão enviados para o email informado
-              </p>
+              <p className="text-darkorange">Importante!</p> Seus códigos
+              adquiridos serão enviados para o email informado
               <p
                 ref={errRef}
                 className={`${

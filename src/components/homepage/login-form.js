@@ -5,8 +5,7 @@ import axios from '../../api/axios';
 import { IoClose } from 'react-icons/io5';
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const PASS_REGEX =
-  /^(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.*[a-z]).{8,}$/;
+const PASS_REGEX = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z0-9]).{8,}$/;
 
 const SIGN_IN_URL = '/register';
 
@@ -35,15 +34,11 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
-    console.log(result);
-    console.log(email);
     setValidEmail(result);
   }, [email]);
 
   useEffect(() => {
     const result = PASS_REGEX.test(pass);
-    console.log(result);
-    console.log(pass);
     const match = pass === matchPass;
     setValidPass(result);
     setValidMatch(match);
@@ -59,7 +54,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
         loginFormIsOpen
           ? 'opacity-100 h-auto max-sm:pt-20 '
           : 'opacity-0 h-0 pointer-events-none'
-      } w-full flex justify-center  transition-opacity duration-200 ease-in-out`}
+      } w-full flex justify-center  transition-opacity duration-75 ease-in-out`}
     >
       <form className=" fixed md:mt-40 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
         <div className="text-white flex justify-end">
@@ -86,7 +81,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
             }}
             autoComplete="off"
             type="email"
-            id="email"
+            id="login-email"
             className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block p-2.5"
             placeholder="name@provedor.com"
             onFocus={() => setEmailFocus(true)}
@@ -103,8 +98,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
               passFocus && !validPass ? 'text-darkorange' : 'invisible'
             }`}
           >
-            Mínimo 8 caracteres, ao menos uma letra maiúscula e um caractere
-            especial
+            Mínimo 8 caracteres, ao menos um caractere especial (ex: @, #, $)
           </p>
           <input
             type="password"

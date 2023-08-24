@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/homepage/Layout';
-import Products from '../components/products/products';
+import Products from '../components/products/';
 
 function ProductsPage() {
   return (

@@ -46,8 +46,8 @@ function Sidebar() {
     >
       <div
         className={`h-screen ${open ? 'w-2/6 max-sm:w-full' : 'w-5'} pt-15  ${
-          isDark ? 'bg-blue' : 'bg-graylight'
-        } overflow-hidden flex flex-col justify-between  shadow-lg shadow-black  duration-300`}
+          isDark ? 'bg-maincolor' : 'bg-graylight'
+        } overflow-hidden flex flex-col justify-between  shadow-lg shadow-black  duration-200`}
       >
         <button
           onClick={() => setOpen(!open)}

@@ -9,14 +9,16 @@ import RegisterForm from './register-form';
 function Layout(props) {
   const [loginFormIsOpen, setLoginFormIsOpen] = useState(false);
   const [registerFormIsOpen, setRegisterFormIsOpen] = useState(false);
-
+  const [openMenu, setOpenMenu] = useState(false);
   return (
-    <div className="">
+    <>
       <Navbar
         setLoginFormIsOpen={setLoginFormIsOpen}
         loginFormIsOpen={loginFormIsOpen}
         registerFormIsOpen={registerFormIsOpen}
         setRegisterFormIsOpen={setRegisterFormIsOpen}
+        openMenu={openMenu}
+        setOpenMenu={setOpenMenu}
       />
       <LoginForm
         setLoginFormIsOpen={setLoginFormIsOpen}
@@ -26,9 +28,17 @@ function Layout(props) {
         registerFormIsOpen={registerFormIsOpen}
         setRegisterFormIsOpen={setRegisterFormIsOpen}
       />
-      <main className="">{props.children}</main>
-      <Footer />
-    </div>
+      <div
+        className={`${
+          registerFormIsOpen || loginFormIsOpen || openMenu
+            ? 'blur-sm pointer-events-none'
+            : ''
+        }`}
+      >
+        <main>{props.children}</main>
+        <Footer />
+      </div>
+    </>
   );
 }
 

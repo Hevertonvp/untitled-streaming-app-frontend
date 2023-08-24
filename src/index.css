@@ -20,7 +20,7 @@
 body {
   min-height: fit-content;
   margin: auto;
-background: #380e69;
+  background: #291064;
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

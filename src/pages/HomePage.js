@@ -4,13 +4,11 @@ import LoginForm from '../components/homepage/login-form';
 
 function HomePage() {
   return (
-    <>
-      <div className="HomePage">
-        <Layout>
-          <Main />
-        </Layout>
-      </div>
-    </>
+    <div className="HomePage">
+      <Layout>
+        <Main />
+      </Layout>
+    </div>
   );
 }
 
