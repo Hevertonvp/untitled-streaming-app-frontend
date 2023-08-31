@@ -6,26 +6,28 @@ module.exports = {
   content: ['./src/**/*.{html,js}', '.public/**/*.{html}'],
   theme: {
     colors: {
-      lightOrange: '#872e01',
+      darkOrange: '#872e01',
       white: '#ffffff',
       blue: '#003180',
       black: '#000000',
       darkblue: '#041e47',
       softpurple: '#b566fa',
       mediumpurple: '#602791',
-      maincolor: '#291064',
+      purpleCardBg: '#f79845',
+      mainPurple: '#291064',
       darkpurple: '#2e0157',
+      orangeIndexBg: '#ff8c5e',
       pink: '#ff49db',
       orange: '#ff7849',
       violet: '#5c1156',
       darkorange: '#e64007',
       green: '#13ce66',
       yellow: '#ffc82c',
-      'gray-dark': '#273444',
+      grayDark: '#273444',
       gray: '#8492a6',
-      graylight: '#e1e9f2',
-      'dark-theme-bg': '#27282b',
-      'card-bg': '#3c1185'
+      grayLight: '#e1e9f2',
+      darkTheme: '#27282b',
+      red: '#d91818'
     },
     extend: {
       fontFamily: {

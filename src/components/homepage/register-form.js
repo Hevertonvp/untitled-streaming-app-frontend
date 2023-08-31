@@ -81,7 +81,7 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
           : 'opacity-0 h-0 pointer-events-none'
       } w-full pt-20 flex justify-center transition-opacity duration-75 ease-in-out`}
     >
-      <section className=" fixed mt-10  font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
+      <section className=" fixed mt-10  font-squada shadow-sm shadow-black pt-5 rounded-lg text-grayLight md:w-5/12 z-50 p-10 bg-grayDark text-center max-sm:w-10/12">
         {success ? (
           <form
             onSubmit={handleTokenSubmit}
@@ -105,13 +105,13 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
               type="password"
               id="password"
               autoComplete="off"
-              className="shadow-sm w-2/4 self-center bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block p-2.5 "
+              className="shadow-sm w-2/4 self-center bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:grayLight focus:border-blue-500 block p-2.5 "
               required
             />
             <p className="">{errMsg ? errMsg : ''}</p>
             <button
               type="submit"
-              className="text-black self-center bg-graylight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="text-black self-center bg-grayLight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Enviar
             </button>
@@ -126,7 +126,7 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
             <div className="mb-6">
               <label
                 htmlFor="email"
-                className="block mb-2 text-graylight text-2xl "
+                className="block mb-2 text-grayLight text-2xl "
               >
                 Digite seu Email
               </label>
@@ -150,7 +150,7 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
                 autoComplete="off"
                 type="email"
                 id="email"
-                className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block p-2.5"
+                className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:grayLight focus:border-blue-500 block p-2.5"
                 placeholder="name@provedor.com"
                 onFocus={() => setEmailFocus(true)}
                 onBlur={() => setEmailFocus(false)}
@@ -160,7 +160,7 @@ function RegisterForm({ registerFormIsOpen, setRegisterFormIsOpen }) {
 
             <button
               type="submit"
-              className={`text-black bg-graylight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
+              className={`text-black bg-grayLight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
             >
               Enviar
             </button>

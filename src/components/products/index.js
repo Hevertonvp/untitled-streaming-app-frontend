@@ -1,33 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
 import useFetch from '../../hooks/useFetch';
 import { Link } from 'react-router-dom';
 import ProductCard from './product-card';
 import LoadingSpiner from '../loadingSpiner';
 import { ToastContainer, toast } from 'react-toastify';
-const bgImg = '.././images/han.png';
-import { BsCart } from 'react-icons/bs';
+import { BsCart, BsCartCheckFill } from 'react-icons/bs';
 import 'react-toastify/dist/ReactToastify.css';
+const bgImg = '.././images/han.png';
 
 function Products() {
   const { data: products, error, loading } = useFetch('/api/v1/products/');
+  const [cartProducts, addToCart, removeFromCart, updateQuantity] =
+    useContext(CartContext);
   const [openOrderMenu, setOpenOrderMenu] = useState(false);
 
-  const notify = () => {
-    toast('Adicionado ao carrinho!');
-  };
+  function AnimationCart() {
+    return cartProducts.length > 0 ? (
+      <div>
+        <BsCartCheckFill className="text-3xl animate-pulse" />
+      </div>
+    ) : (
+      <BsCart className="text-3xl" />
+    );
+  }
+
+  useEffect(() => {
+    AnimationCart();
+  }, [cartProducts]);
 
   return (
-    <div className="p-5 to-maincolor min-h-screen from-softpurple bg-gradient-to-t">
-      <div className="flex flex-col bg-black bg-opacity-40 border border-gray ">
+    <div className="p-5 to-mainPurple min-h-screen from-orangeIndexBg bg-gradient-to-t">
+      <div className="flex flex-col bg-black bg-opacity-80 border border-gray ">
         <div>
-          <div className=" bg-gray-dark flex items-center px-10 py-4 justify-between text-white font-squada ">
+          <div className=" bg-grayDark flex items-center px-10 py-4 justify-between text-white font-squada ">
             <h1 className="text-3xl text-center">Escolha seus planos</h1>
-            <div className="text-2xl items-center space-x-2 flex">
-              <Link to={'/cart'}>
-                <BsCart className="text-orange hover:text-darkorange" />
-              </Link>
-            </div>
+            <Link className="items-center space-x-2 flex" to={'/cart'}>
+              <div className="flex px-1 text-orange hover:text-darkorange space-x-1 items-center">
+                <AnimationCart />
+              </div>
+            </Link>
           </div>
           {loading ? (
             <LoadingSpiner />
@@ -41,24 +54,11 @@ function Products() {
                     name={product.name}
                     price={product.registrationPrice}
                     description={product.description}
-                    notify={notify}
                   />
                 );
               })}
             </div>
           )}
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
         </div>
       </div>
     </div>

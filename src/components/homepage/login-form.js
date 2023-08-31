@@ -56,12 +56,12 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
           : 'opacity-0 h-0 pointer-events-none'
       } w-full flex justify-center  transition-opacity duration-75 ease-in-out`}
     >
-      <form className=" fixed md:mt-40 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-graylight md:w-5/12 z-50 p-10 bg-gray-dark text-center max-sm:w-10/12">
+      <form className=" fixed md:mt-40 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-grayLight md:w-5/12 z-50 p-10 bg-grayDark text-center max-sm:w-10/12">
         <div className="text-white flex justify-end">
           <IoClose onClick={() => setLoginFormIsOpen(!loginFormIsOpen)} />
         </div>
         <div className="mb-6">
-          <label htmlFor="email" className="block mb-2 text-graylight ">
+          <label htmlFor="email" className="block mb-2 text-grayLight ">
             Email
           </label>
           <p
@@ -82,7 +82,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
             autoComplete="off"
             type="email"
             id="login-email"
-            className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block p-2.5"
+            className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:grayLight focus:border-blue-500 block p-2.5"
             placeholder="name@provedor.com"
             onFocus={() => setEmailFocus(true)}
             onBlur={() => setEmailFocus(false)}
@@ -90,7 +90,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
           />
         </div>
         <div className="">
-          <label htmlFor="password" className="block  text-graylight ">
+          <label htmlFor="password" className="block  text-grayLight ">
             Senha
           </label>
           <p
@@ -106,7 +106,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
             autoComplete="off"
             onChange={(e) => setPass(e.target.value)}
             value={pass}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block w-full p-2.5 "
+            className="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:grayLight focus:border-blue-500 block w-full p-2.5 "
             required
             onFocus={() => setPassFocus(true)}
             onBlur={() => setPassFocus(false)}
@@ -115,7 +115,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
         <div className="">
           <label
             htmlFor="repeat-password"
-            className="block mb-2 text-graylight "
+            className="block mb-2 text-grayLight "
           >
             Confirme sua senha
           </label>
@@ -131,7 +131,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
             id="repeat-password"
             onChange={(e) => setMatchPass(e.target.value)}
             value={matchPass}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:graylight focus:border-blue-500 block w-full p-2.5"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:grayLight focus:border-blue-500 block w-full p-2.5"
             required
             autoComplete="off"
             onFocus={() => setMatchFocus(true)}
@@ -152,7 +152,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
           <div className="flex flex-col  justify-center">
             <label
               htmlFor="terms"
-              className="ml-2 text-sm font-medium  text-graylight "
+              className="ml-2 text-sm font-medium  text-grayLight "
             >
               Eu concordo com os{' '}
               <a href="#" className="text-white  hover:underline ">
@@ -171,7 +171,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
         </div>
         <button
           type="submit"
-          className="text-black  bg-graylight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          className="text-black  bg-grayLight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         >
           Entrar
         </button>

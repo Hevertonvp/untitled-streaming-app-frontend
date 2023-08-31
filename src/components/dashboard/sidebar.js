@@ -46,7 +46,7 @@ function Sidebar() {
     >
       <div
         className={`h-screen ${open ? 'w-2/6 max-sm:w-full' : 'w-5'} pt-15  ${
-          isDark ? 'bg-maincolor' : 'bg-graylight'
+          isDark ? 'bg-mainPurple' : 'bg-grayLight'
         } overflow-hidden flex flex-col justify-between  shadow-lg shadow-black  duration-200`}
       >
         <button
@@ -79,8 +79,8 @@ function Sidebar() {
                   to={item.url}
                   className={`flex items-center p-7  duration-150 rounded-md ${
                     isDark
-                      ? 'bg-gray-dark hover:bg-dark-theme-bg text-white'
-                      : 'bg-gray hover:bg-gray-dark text-black'
+                      ? 'bg-grayDark hover:bg-dark-theme-bg text-white'
+                      : 'bg-gray hover:bg-grayDark text-black'
                   }  w-full`}
                 >
                   <span className="mr-2">{React.createElement(item.icon)}</span>
@@ -91,7 +91,7 @@ function Sidebar() {
           })}
         </ul>
         <div
-          className={`bg-gray-dark border-2 border-softpurple mb-20 w-20 items-center flex rounded-lg h-7 ml-11 px-1`}
+          className={`bg-grayDark border-2 border-softpurple mb-20 w-20 items-center flex rounded-lg h-7 ml-11 px-1`}
         >
           <button
             onClick={() => setIsDark(!isDark)}

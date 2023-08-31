@@ -114,7 +114,7 @@ function Navbar({
               } font-squada text-lg ${
                 name === 'ENTRAR' || name === 'Venda rápida'
                   ? 'text-orange max-sm:mt-10 hover:text-darkorange'
-                  : 'text-graylight hover:text-white'
+                  : 'text-grayLight hover:text-white'
               } duration-100`}
             >
               {icon ? React.createElement(icon) : ''}
