@@ -1,14 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useReducer, createContext } from 'react';
-import { reducer } from '../reducer/cartReducer';
+import { useReducer, createContext, useEffect, useState } from 'react';
+import { reducer, initialState } from '../reducer/cartReducer';
 
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cartProducts, dispatch] = useReducer(reducer, []);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
+  function updateCartValue() {
+    let value = 0;
+    state.products?.map((cartProduct, i) => {
+      value += parseFloat(cartProduct.price * cartProduct.quantity);
+    });
+    return value;
+  }
   function addToCart(name, id, price) {
-    const existingProduct = cartProducts.find(
+    const existingProduct = state.products.find(
       (cartProduct) => cartProduct.id === id,
     );
     if (existingProduct) {
@@ -25,28 +33,14 @@ export function CartProvider({ children }) {
       };
       dispatch({
         type: 'ADD_TO_CART',
-        payload: productObj,
+        payload: {
+          products: [...state.products, productObj],
+        },
       });
     }
-    console.log(cartProducts);
-  }
-
-  function updateCartValue() {
-    let value = 0;
-    cartProducts?.map((cartProduct, i) => {
-      value += parseFloat(cartProduct.price * cartProduct.quantity);
-    });
-    console.log(value);
-    // dispatch({
-    //   type: 'UPDATE_CART_VALUE',
-    //   payload: value,
-    // });
   }
 
   function updateQuantity(quantity, id) {
-    const existingProduct = cartProducts.find(
-      (cartProduct) => cartProduct.id === id,
-    );
     dispatch({
       type: 'UPDATE_QUANTITY',
       payload: { quantity, id },
@@ -54,7 +48,7 @@ export function CartProvider({ children }) {
   }
 
   function removeFromCart(id) {
-    const existingProduct = cartProducts.find(
+    const existingProduct = state.products.find(
       (cartProduct) => cartProduct.id === id,
     );
     dispatch({
@@ -62,10 +56,11 @@ export function CartProvider({ children }) {
       payload: { id },
     });
   }
+  const cartProducts = state.products;
   return (
     <CartContext.Provider
       value={[
-        cartProducts,
+        state,
         addToCart,
         removeFromCart,
         updateQuantity,

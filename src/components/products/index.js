@@ -12,12 +12,12 @@ const bgImg = '.././images/han.png';
 
 function Products() {
   const { data: products, error, loading } = useFetch('/api/v1/products/');
-  const [cartProducts, addToCart, removeFromCart, updateQuantity] =
+  const [state, addToCart, removeFromCart, updateQuantity] =
     useContext(CartContext);
   const [openOrderMenu, setOpenOrderMenu] = useState(false);
 
-  function AnimationCart() {
-    return cartProducts.length > 0 ? (
+  function AnimatedCart() {
+    return state.products?.length > 0 ? (
       <div>
         <BsCartCheckFill className="text-3xl animate-pulse" />
       </div>
@@ -27,8 +27,8 @@ function Products() {
   }
 
   useEffect(() => {
-    AnimationCart();
-  }, [cartProducts]);
+    AnimatedCart();
+  }, [state.products]);
 
   return (
     <div className="p-5 to-mainPurple min-h-screen from-orangeIndexBg bg-gradient-to-t">
@@ -38,7 +38,7 @@ function Products() {
             <h1 className="text-3xl text-center">Escolha seus planos</h1>
             <Link className="items-center space-x-2 flex" to={'/cart'}>
               <div className="flex px-1 text-orange hover:text-darkorange space-x-1 items-center">
-                <AnimationCart />
+                <AnimatedCart />
               </div>
             </Link>
           </div>

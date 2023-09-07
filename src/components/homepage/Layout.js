@@ -24,14 +24,14 @@ function Layout(props) {
         setLoginFormIsOpen={setLoginFormIsOpen}
         loginFormIsOpen={loginFormIsOpen}
       />
-      <RegisterForm
+      {/* <RegisterForm
         registerFormIsOpen={registerFormIsOpen}
         setRegisterFormIsOpen={setRegisterFormIsOpen}
-      />
+      /> */}
       <div
         className={`${
           registerFormIsOpen || loginFormIsOpen || openMenu
-            ? 'blur-sm pointer-events-none'
+            ? 'blur-sm bg-grayDark bg-opacity-25 pointer-events-none'
             : ''
         }`}
       >

@@ -21,7 +21,7 @@ function Navbar({
       checkLogin: true,
     },
     {
-      name: 'Venda rápida',
+      name: 'Compra rápida',
       link: '/products',
     },
     {
@@ -51,22 +51,20 @@ function Navbar({
       className={`
       ${
         isScrolled || openMenu
-          ? 'bg-darkpurple md:bg-opacity-95  max-sm:bg-opacity-100'
+          ? 'bg-darkpurple md:bg-opacity-95 max-sm:bg-opacity-100'
           : ''
       }
-       w-full
+      w-full
       fixed
-
       overflow-hidden
       duration-300
-      max-sm:border-b-2
       transition-all
       items-center ${openMenu ? 'h-80 z-50' : 'h-20'} duration-200 md:h-20`}
     >
       <div
         className={`max-w-screen-xl flex flex-col md:flex-row max-md:flex-wrap justify-between mx-auto p-5`}
       >
-        <div className="flex mb-10 items-center justify-between">
+        <div className="flex max-sm:mb-10 items-center justify-between">
           <div className="flex ">
             <Link to={'/'}>
               <img src=".././images/logo.png" alt="" className="h-10" />
@@ -83,7 +81,7 @@ function Navbar({
               className={` ${
                 loginFormIsOpen
                   ? 'hidden'
-                  : 'md:hidden text-white text-3xl mt-4'
+                  : 'md:hidden text-white text-3xl mt-4 '
               }`}
             />
           </button>
@@ -109,11 +107,11 @@ function Navbar({
               }}
               key={id}
               to={link}
-              className={` my-2 flex ml-2 justify-center hover:border-b md:hover:underline underline-offset-4 border-mediumpurple px-4 max-sm:rounded-md md:rounded-sm max-sm:bg-pink max-sm:bg-opacity-5 overflow-hidden items-center  ${
+              className={` max-sm:my-2 inline-flex ml-2 justify-center hover:border-b underline-offset-4 border-mediumpurple px-4 max-sm:rounded-md md:rounded-sm max-sm:bg-pink max-sm:bg-opacity-5 overflow-hidden items-center  ${
                 openMenu ? 'opacity-100' : 'max-sm:opacity-0'
               } font-squada text-lg ${
-                name === 'ENTRAR' || name === 'Venda rápida'
-                  ? 'text-orange max-sm:mt-10 hover:text-darkorange'
+                name === 'ENTRAR' || name === 'Compra rápida'
+                  ? 'text-orange hover:text-white'
                   : 'text-grayLight hover:text-white'
               } duration-100`}
             >

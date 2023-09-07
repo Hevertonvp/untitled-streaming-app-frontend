@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { React, useContext } from 'react';
+import { React, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCartPlus } from 'react-icons/fa';
 import { BsCheck2Square } from 'react-icons/bs';
@@ -13,13 +13,8 @@ function ProductCard({
   dispatch,
   handleCartIcon,
 }) {
-  const [
-    cartProducts,
-    addToCart,
-    removeFromCart,
-    updateQuantity,
-    updateCartValue,
-  ] = useContext(CartContext);
+  const [state, addToCart, removeFromCart, updateQuantity, updateCartValue] =
+    useContext(CartContext);
 
   return (
     <div className=" h-auto m-5 w-80 max-sm:w-full shadow-md shadow-softpurple bg-grayLight bg-opacity-10 border-darkpurple flex flex-col rounded-md font-squada">
@@ -32,7 +27,7 @@ function ProductCard({
         <h1 className="text-white font m-3">{name.toUpperCase()}</h1>
         <div className="bg-black bg-opacity-40 h-auto p-5 text-grayLight rounded-lg mb-2 w-11/12 text-center">
           <p>{description}</p>
-          <h1 className="text-pink text-2xl bg-pink bg-opacity-10 rounded">
+          <h1 className="text-pink text-2xl bg-softpurple bg-opacity-20 rounded-sm">
             {price.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -40,7 +35,7 @@ function ProductCard({
           </h1>
           <h1 className="text-white">
             Preço para revenda:{' '}
-            <span className="text-pink underline text-3xl ">
+            <span className="text-pink underline text-4xl ">
               {price.toLocaleString('pt-br', {
                 style: 'currency',
                 currency: 'BRL',
