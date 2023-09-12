@@ -50,7 +50,7 @@ function Navbar({ openMenu, setOpenMenu }) {
       className={`
       ${
         isScrolled || openMenu
-          ? 'bg-darkpurple md:bg-opacity-95 max-sm:bg-opacity-100'
+          ? 'bg-mainPurple  md:bg-opacity-95 shadow-2xl max-md:bg-opacity-100'
           : ''
       }
       w-full
@@ -58,12 +58,12 @@ function Navbar({ openMenu, setOpenMenu }) {
       overflow-hidden
       duration-300
       transition-all
-      items-center ${openMenu ? 'h-80 z-50' : 'h-20'} md:h-20`}
+      items-center ${openMenu ? 'h-80 z-50 ' : 'h-20'}`}
     >
       <div
         className={`max-w-screen-xl flex flex-col md:flex-row max-md:flex-wrap justify-between mx-auto p-5`}
       >
-        <div className="flex max-sm:mb-10 items-center justify-between">
+        <div className="flex max-md:mb-10 items-center justify-between">
           <div className="flex ">
             <Link to={'/'}>
               <img src=".././images/logo.png" alt="" className="h-10" />
@@ -91,17 +91,16 @@ function Navbar({ openMenu, setOpenMenu }) {
           return (
             <Link
               onClick={(e) => {
+                setOpenMenu(false);
                 switch (name) {
                   case 'ENTRAR':
                     e.preventDefault();
-                    setOpenMenu(false);
                     handleAuthForm();
                     setBlurBg(!blurBg);
                     break;
                   case 'Seja um revendedor':
                     e.preventDefault();
                     handleAuthForm();
-                    setOpenMenu(false);
                     break;
                   default:
                     break;
@@ -109,7 +108,7 @@ function Navbar({ openMenu, setOpenMenu }) {
               }}
               key={id}
               to={link}
-              className={` max-sm:my-2 inline-flex ml-2 justify-center hover:border-b underline-offset-4 border-mediumpurple px-4 max-sm:rounded-md md:rounded-sm max-sm:bg-pink max-sm:bg-opacity-5 overflow-hidden items-center  ${
+              className={`max-md:my-2 inline-flex ml-2 justify-center hover:border-b underline-offset-4 border-mediumpurple px-4 max-sm:rounded-md max-md:rounded-sm max-md:bg-pink max-md:bg-opacity-5 overflow-hidden items-center  ${
                 openMenu ? 'opacity-100' : 'max-sm:opacity-0'
               } font-squada text-lg ${
                 name === 'ENTRAR' || name === 'Compra rápida'

@@ -8,6 +8,8 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const maximumQuantity = 5; //this value will come from the server in the future
+
   function updateCartValue() {
     let value = 0;
     state.products?.map((cartProduct, i) => {
@@ -22,7 +24,13 @@ export function CartProvider({ children }) {
     if (existingProduct) {
       dispatch({
         type: 'UPDATE_QUANTITY',
-        payload: { id, quantity: existingProduct.quantity + 1 },
+        payload: {
+          id,
+          quantity:
+            existingProduct.quantity <= maximumQuantity
+              ? existingProduct.quantity + 1
+              : maximumQuantity,
+        },
       });
     } else {
       const productObj = {
@@ -43,7 +51,10 @@ export function CartProvider({ children }) {
   function updateQuantity(quantity, id) {
     dispatch({
       type: 'UPDATE_QUANTITY',
-      payload: { quantity, id },
+      payload: {
+        quantity,
+        id,
+      },
     });
   }
 

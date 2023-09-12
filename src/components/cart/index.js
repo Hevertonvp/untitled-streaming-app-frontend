@@ -16,6 +16,7 @@ function Cart() {
       removeFromCart,
       updateQuantity,
       updateCartValue,
+      quantity
     ] = useContext(CartContext);
 
   const value = updateCartValue().toLocaleString('pt-br', {
