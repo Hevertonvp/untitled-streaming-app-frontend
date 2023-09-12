@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Redirect() {
-  const navegate = useNavigate();
+  const navigate = useNavigate();
   const timeout = useRef(0);
   const [time, setTime] = useState(3);
 
@@ -12,7 +12,7 @@ function Redirect() {
       setTime((t) => t - 1);
     }, 2000);
     if (time <= 0) {
-      navegate('/dashboard');
+      navigate('/dashboard');
     }
     return () => {
       clearTimeout(timeout.current);

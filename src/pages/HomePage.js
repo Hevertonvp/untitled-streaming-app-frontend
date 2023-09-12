@@ -1,14 +1,19 @@
+import { Outlet } from 'react-router-dom';
 import Layout from '../components/homepage/Layout';
+import Login from '../components/registerLoginForm/login';
+import BlurBg from '../components/homepage/blurBg';
 import Main from '../components/homepage/main';
-import LoginForm from '../components/homepage/login-form';
 
 function HomePage() {
   return (
-    <div className="HomePage">
+    <>
       <Layout>
-        <Main />
+        <Login />
+        <BlurBg>
+          <Outlet />
+        </BlurBg>
       </Layout>
-    </div>
+    </>
   );
 }
 

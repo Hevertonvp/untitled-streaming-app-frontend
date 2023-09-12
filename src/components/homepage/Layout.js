@@ -20,24 +20,8 @@ function Layout(props) {
         openMenu={openMenu}
         setOpenMenu={setOpenMenu}
       />
-      <LoginForm
-        setLoginFormIsOpen={setLoginFormIsOpen}
-        loginFormIsOpen={loginFormIsOpen}
-      />
-      {/* <RegisterForm
-        registerFormIsOpen={registerFormIsOpen}
-        setRegisterFormIsOpen={setRegisterFormIsOpen}
-      /> */}
-      <div
-        className={`${
-          registerFormIsOpen || loginFormIsOpen || openMenu
-            ? 'blur-sm bg-grayDark bg-opacity-25 pointer-events-none'
-            : ''
-        }`}
-      >
-        <main>{props.children}</main>
-        <Footer />
-      </div>
+      <main>{props.children}</main>
+      <Footer />
     </>
   );
 }

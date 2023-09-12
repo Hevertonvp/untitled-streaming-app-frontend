@@ -1,25 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Home from './pages/HomePage';
-import Dashboard from './pages/Dashboard';
-import ProductsPage from './pages/ProductsPage';
-import CartPage from './pages/CartPage';
+import Login from './components/registerLoginForm/login';
+import Register from './components/homepage/register-form';
+import Products from './components/products/';
+import Cart from './components/cart';
+import Main from './components/homepage/main';
+import Home from './pages/homePage';
+import Dashboard from './pages/dashboard';
 import { CartProvider } from './context/CartContext';
+import { BgProvider } from './context/blurBgContext';
+import { AuthProvider } from './context/AuthContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
-      <React.StrictMode>
+      <AuthProvider>
         <CartProvider>
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/dashboard" element={<Dashboard />}></Route>
-            <Route path="/products" element={<ProductsPage />}></Route>
-            <Route path="/cart" element={<CartPage />}></Route>
-          </Routes>
+          <BgProvider>
+            <Routes>
+              <Route element={<Home />}>
+                <Route path="/" element={<Main />}></Route>
+                <Route path="/products" element={<Products />}></Route>
+                <Route path="/cart" element={<Cart />}></Route>
+              </Route>
+            </Routes>
+          </BgProvider>
         </CartProvider>
-      </React.StrictMode>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

@@ -1,17 +1,19 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable react/prop-types */
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { BgContext } from '../../context/blurBgContext';
 import { Link } from 'react-router-dom';
 import axios from '../../api/axios';
 import { IoClose } from 'react-icons/io5';
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const PASS_REGEX = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z0-9]).{8,}$/;
+const PASS_REGEX = /^.{8,}$/;
 
 const SIGN_IN_URL = '/register';
-const URL = '/api/v1/users/signUp/';
+const URL = '/api/v1/users/login/';
 
-function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
+function Login({ loginFormIsOpen, setLoginFormIsOpen }) {
   const errRef = useRef();
   const emailRef = useRef();
 
@@ -31,6 +33,11 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
 
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const authContext = useContext(AuthContext);
+  const [handleAuthForm, formIsOpen] = authContext;
+  const bgContext = useContext(BgContext);
+  const [blurBg, setBlurBg] = bgContext;
 
   useEffect(() => {
     emailRef.current.focus();
@@ -55,9 +62,10 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
   async function handleOnSubmit(e) {
     e.preventDefault();
     try {
+      console.log({ email: email, password: pass });
       const response = await axios.post(
         URL,
-        JSON.stringify({ email }),
+        JSON.stringify({ email: email, password: pass }),
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
@@ -66,6 +74,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
       );
     } catch (error) {
       if (error.response.data.message) {
+        console.log(error.response.data.message);
         setErrMsg(error.response.data.message);
       } else
         setErrMsg(
@@ -77,30 +86,36 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
   return (
     <section
       className={`${
-        loginFormIsOpen
-          ? 'opacity-100 h-auto max-sm:pt-20 '
-          : 'opacity-0 h-0 pointer-events-none'
-      } w-full flex justify-center  transition-opacity duration-75 ease-in-out`}
+        formIsOpen ? 'opacity-100 h-auto' : 'opacity-0 h-0 pointer-events-none'
+      }
+      w-full flex justify-center transition-all duration-200 ease-in-out`}
     >
-      {isRegistered ? (
-        <form className=" fixed md:mt-40 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-grayLight md:w-5/12 z-50 p-10 bg-grayDark text-center max-sm:w-10/12">
-          <div className="text-white flex justify-end">
-            <IoClose onClick={() => setLoginFormIsOpen(!loginFormIsOpen)} />
-          </div>
-          <div className="mb-6">
+      <form
+        onSubmit={handleOnSubmit}
+        className="fixed md:mt-60 max-sm:mt-24 items-center font-squada border-2 border-gray shadow-2xl shadow-orangeIndexBg rounded-lg text-grayLight md:w-4/12 z-50 p-5 bg-darkTheme text-center max-sm:w-10/12"
+      >
+        <div className="flex justify-end ">
+          <button className="text-2xl hover:text-white pb-5">
+            <IoClose
+              onClick={() => {
+                setBlurBg(!blurBg);
+                handleAuthForm();
+              }}
+            />
+          </button>
+        </div>
+        <div className="p-7">
+          <div className="mb-4">
             <label htmlFor="email" className="block text-grayLight ">
               Email
             </label>
-            <p
-              ref={errRef}
-              className={`${
-                emailFocus && email && !validEmail
-                  ? 'text-darkorange'
-                  : 'invisible'
-              }`}
-            >
-              Por favor, insira um email valido
-            </p>
+            {emailFocus && email && !validEmail && (
+              <span>
+                <p className="text-sm text-orange">
+                  Por favor insira um email válido
+                </p>
+              </span>
+            )}
             <input
               ref={emailRef}
               onChange={(e) => {
@@ -111,22 +126,20 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
               id="login-email"
               className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:grayLight focus:border-blue-500 block p-2.5"
               placeholder="name@provedor.com"
-              onFocus={() => setEmailFocus(false)}
+              onFocus={() => setEmailFocus(true)}
               onBlur={() => setEmailFocus(false)}
               required
             />
           </div>
-          <div className="">
+          <div className="mb-4">
             <label htmlFor="password" className="block  text-grayLight ">
               Senha
             </label>
-            <p
-              className={`${
-                passFocus && !validPass ? 'text-darkorange' : 'invisible'
-              }`}
-            >
-              Mínimo 8 caracteres, ao menos um caractere especial (ex: @, #, $)
-            </p>
+            {passFocus && !validPass && (
+              <span>
+                <p className="text-sm text-orange">Mínimo 8 caracteres</p>
+              </span>
+            )}
             <input
               type="password"
               id="password"
@@ -139,20 +152,13 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
               onBlur={() => setPassFocus(false)}
             />
           </div>
-          <div className="">
-            <label
-              htmlFor="repeat-password"
-              className="block mb-2 text-grayLight "
-            >
+          <div className="mb-4">
+            <label htmlFor="repeat-password" className="block  text-grayLight ">
               Confirme sua senha
             </label>
-            <p
-              className={`${
-                !validMatch && matchFocus ? 'text-darkorange' : 'invisible'
-              }`}
-            >
-              As senhas não são iguais
-            </p>
+            {!validMatch && matchFocus && (
+              <p className="text-orange text-sm">As senhas não são iguais</p>
+            )}
             <input
               type="password"
               id="repeat-password"
@@ -182,7 +188,7 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
                 className="ml-2 text-sm font-medium  text-grayLight "
               >
                 Eu concordo com os{' '}
-                <a href="#" className="text-white  hover:underline ">
+                <a href="#" className="text-orangeCardBg  hover:underline ">
                   termos e condições
                 </a>
               </label>
@@ -190,9 +196,9 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
                 Não possui cadastro?{' '}
                 <span>
                   <Link
+                    to={'/register'}
                     onClick={() => setIsRegistered(false)}
-                    href="/"
-                    className="hover:underline"
+                    className="hover:underline text-orangeCardBg "
                   >
                     Clique aqui
                   </Link>
@@ -202,72 +208,14 @@ function LoginForm({ loginFormIsOpen, setLoginFormIsOpen }) {
           </div>
           <button
             type="submit"
-            className="text-black  bg-grayLight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="text-black  bg-grayLight hover:bg-white focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             Entrar
           </button>
-        </form>
-      ) : (
-        <form
-          onSubmit={() => handleOnSubmit(event)}
-          className=" fixed md:mt-40 items-center font-squada shadow-sm shadow-black pt-5 rounded-lg text-grayLight md:w-5/12 z-50 p-10 bg-grayDark text-center max-sm:w-10/12"
-        >
-          <div className="text-white flex justify-end">
-            <IoClose
-              onClick={() => {
-                setLoginFormIsOpen(!loginFormIsOpen);
-                setIsRegistered(true);
-              }}
-            />
-          </div>
-
-          <div className="mb-6">
-            <label htmlFor="email" className="block text-white ">
-              Por favor, insira seu email:
-            </label>
-            <div className="text-darkorange text-sm mt-5">
-              {errMsg && (
-                <p className="text-darkorange text-sm">
-                  {errMsg}. Esqueceu seu email ou senha?{' '}
-                  <Link className="text-white">Clique aqui</Link>
-                </p>
-              )}
-            </div>
-            <p
-              ref={errRef}
-              className={`${
-                emailFocus && email && !validEmail
-                  ? 'text-darkorange'
-                  : 'invisible'
-              }`}
-            >
-              Por favor, insira um email valido
-            </p>
-            <input
-              ref={emailRef}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              autoComplete="off"
-              type="email"
-              id="login-email"
-              className="shadow-sm bg-gray-50 w-full border border-gray-300 text-black text-sm rounded-lg focus:grayLight focus:border-blue-500 block p-2.5"
-              placeholder="name@provedor.com"
-              onFocus={() => setEmailFocus(true)}
-              onBlur={() => setEmailFocus(false)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="text-black  bg-grayLight hover:bg-gray focus:ring-4 focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            Enviar
-          </button>
-        </form>
-      )}
+        </div>
+      </form>
     </section>
   );
 }
 
-export default LoginForm;
+export default Login;

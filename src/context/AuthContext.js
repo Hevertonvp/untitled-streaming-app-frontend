@@ -1,25 +1,25 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { createContext, useReducer } from 'react';
+import { initialState, reducer } from '../reducer/authReducer';
 
 export const AuthContext = createContext();
 
-export function authReducer(state, action) {
-  const { type, payload } = action;
-  switch (type) {
-    case 'LOGIN': {
-      return { user: payload.user };
-    }
-    case 'LOGOUT': {
-      return { user: null };
-    }
-    default: {
-      return state;
-    }
-  }
-}
+export function AuthProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, {});
 
-export function AuthContextProvider({ children }) {
-  const [state, dispatch] = useReducer(authReducer, { user: null });
+  function handleAuthForm() {
+    dispatch({
+      type: 'SET_REGISTER_FORM_OPEN',
+      payload: !state.loginFormIsOpen,
+    });
+  }
+  const formIsOpen = state.loginFormIsOpen;
+  return (
+    <AuthContext.Provider value={[handleAuthForm, formIsOpen]}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export default AuthContext;

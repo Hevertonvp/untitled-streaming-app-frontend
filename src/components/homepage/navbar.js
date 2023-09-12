@@ -1,18 +1,17 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { BgContext } from '../../context/blurBgContext';
+import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { IoLogInOutline } from 'react-icons/io5';
 import { HiOutlineViewList } from 'react-icons/hi';
 
-function Navbar({
-  setLoginFormIsOpen,
-  loginFormIsOpen,
-  registerFormIsOpen,
-  setRegisterFormIsOpen,
-  openMenu,
-  setOpenMenu,
-}) {
+function Navbar({ openMenu, setOpenMenu }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const bgContext = useContext(BgContext);
+  const [blurBg, setBlurBg] = bgContext;
+  const formContext = useContext(AuthContext);
+  const [handleAuthForm, formIsOpen] = formContext;
 
   const navLinks = [
     {
@@ -30,7 +29,7 @@ function Navbar({
     },
     {
       name: 'ENTRAR',
-      link: '/dashboard',
+      link: '/access',
       checkLogin: true,
       icon: IoLogInOutline,
     },
@@ -59,7 +58,7 @@ function Navbar({
       overflow-hidden
       duration-300
       transition-all
-      items-center ${openMenu ? 'h-80 z-50' : 'h-20'} duration-200 md:h-20`}
+      items-center ${openMenu ? 'h-80 z-50' : 'h-20'} md:h-20`}
     >
       <div
         className={`max-w-screen-xl flex flex-col md:flex-row max-md:flex-wrap justify-between mx-auto p-5`}
@@ -79,10 +78,12 @@ function Navbar({
                 setOpenMenu(!openMenu);
               }}
               className={` ${
-                loginFormIsOpen
+                formIsOpen
                   ? 'hidden'
-                  : 'md:hidden text-white text-3xl mt-4 '
-              }`}
+                  : 'md:hidden text-white text-3xl mt-4 transition-all'
+              }
+              ${openMenu && 'rotate-90 '}
+              `}
             />
           </button>
         </div>
@@ -93,12 +94,13 @@ function Navbar({
                 switch (name) {
                   case 'ENTRAR':
                     e.preventDefault();
-                    setLoginFormIsOpen(!loginFormIsOpen);
                     setOpenMenu(false);
+                    handleAuthForm();
+                    setBlurBg(!blurBg);
                     break;
                   case 'Seja um revendedor':
                     e.preventDefault();
-                    setRegisterFormIsOpen(!registerFormIsOpen);
+                    handleAuthForm();
                     setOpenMenu(false);
                     break;
                   default:
@@ -111,7 +113,7 @@ function Navbar({
                 openMenu ? 'opacity-100' : 'max-sm:opacity-0'
               } font-squada text-lg ${
                 name === 'ENTRAR' || name === 'Compra rápida'
-                  ? 'text-orange hover:text-white'
+                  ? 'text-orange hover:text-orangeCardBg'
                   : 'text-grayLight hover:text-white'
               } duration-100`}
             >
